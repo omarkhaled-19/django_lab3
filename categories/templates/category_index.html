@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block body%}
+<div style="margin-top: 70px; padding: 2rem;">
+    <a href="{% url 'category.create' %}" class="cta-button">Add a Category</a>
+    <table class="table table-stripe">
+        <thead>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Show</th>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description}}</td>
+                <td>{{ category.created_at }}</td>
+                <td>{{ category.updated_at }}</td>
+                <td> <a href="{% url 'category.show' category.id %}" class="cta-button">Show</a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

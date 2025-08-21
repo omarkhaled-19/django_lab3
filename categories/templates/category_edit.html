@@ -1,0 +1,93 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+<style>
+  .form-wrapper {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    font-family: system-ui, sans-serif;
+  }
+
+  .form-wrapper h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #1f2937;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #374151;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    outline: none;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #3b82f6;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background-color: #2563eb;
+  }
+
+  .btn-cancel {
+    background-color: #6b7280; /* gray-500 */
+    margin-left: 10px;
+  }
+
+  .btn-cancel:hover {
+    background-color: #4b5563;
+  }
+</style>
+
+<div class="form-wrapper">
+  <h1>Edit Category</h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div style="margin-top: 20px; text-align: center;">
+      <button type="submit" class="btn">Save Changes</button>
+      <a href="{% url 'category.show' category.id %}" class="btn btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

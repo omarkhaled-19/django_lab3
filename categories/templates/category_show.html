@@ -1,0 +1,185 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block body %}
+<style>
+    .category-card {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      color: #1f2937; /* gray-800 */
+    }
+
+    .category-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .category-body {
+      padding: 24px;
+    }
+
+    .category-body h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .category-meta {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .category-meta strong {
+      color: #374151; /* gray-700 */
+    }
+
+    .price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #3b82f6; /* blue-500 */
+      margin: 16px 0;
+    }
+
+    .btn-delete {
+      display: inline-block;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      background-color: red;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #2563eb;
+    }
+
+     .content-section {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        font-family: system-ui, sans-serif;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #1f2937;
+        text-align: center;
+    }
+
+    .product-count {
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #6b7280; /* gray-500 */
+    }
+
+    .products-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .product-item {
+        background: #f9fafb;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        transition: background-color 0.2s ease;
+    }
+
+    .product-item:hover {
+        background-color: #f3f4f6;
+    }
+
+    .product-link {
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        color: #2563eb; /* blue-600 */
+    }
+
+    .product-link:hover {
+        text-decoration: underline;
+    }
+  </style>
+
+  <div class="category-card">
+    <div class="category-body">
+      <h1>{{ category.name }}</h1>
+      {% if category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-width: 300px;">
+      {% endif %}
+      <p class="category-meta"><strong>Created At:</strong> {{ category.created_at }}</p>
+      <p class="category-meta"><strong>Updated At:</strong> {{ category.updated_at }}</p>
+      <a href="{% url 'category.edit' category.id %}" class="btn">Edit Category</a>
+      <a href="{% url 'category.delete' category.id %}" class="btn-delete">Delete Category</a>
+      <a href="{% url 'category.all' %}" class="btn">Back to categories</a>
+    </div>
+  </div>
+
+
+ {% if category.products.all %}
+    <div class="content-section">
+        <h3 class="section-title">Products in {{ category.name }}</h3>
+
+        <div class="products-preview">
+            <div class="product-count">
+                <span class="count-number">
+                    {{ category.products.all|length }} product{{ category.products.all|length|pluralize }}
+                </span>
+            </div>
+
+            <ul class="products-list">
+                {% for product in category.products.all %}
+                    <li class="product-item">
+                        <a href="{{ product.show_url }}" class="product-link">
+                            {{ product.name }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>No products in this category yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}
+
+
+
+{% endblock %}

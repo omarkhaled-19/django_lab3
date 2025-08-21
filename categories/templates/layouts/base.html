@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TechStore - Your Premier Destination for Cutting-Edge Technology{% endblock %}</title>
+    
+    {% block extra_meta %}{% endblock %}
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: system-ui, sans-serif;
+      font-size: 14px;
+      color: #1f2937; /* gray-800 */
+    }
+
+    .table th,
+    .table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb; /* gray-200 */
+    }
+
+    .table thead th {
+      background-color: #f9fafb; /* gray-50 */
+      font-weight: 600;
+    }
+
+    .table tbody tr:nth-child(odd) {
+      background-color: #fdfdfd;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f3f4f6; /* gray-100 */
+    }
+
+    .table th:first-child,
+    .table td:first-child {
+      border-top-left-radius: 6px;
+    }
+    .table th:last-child,
+    .table td:last-child {
+      border-top-right-radius: 6px;
+    }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-top: 80px; /* Account for fixed header */
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #4a5568;
+            padding-top: 2rem;
+            text-align: center;
+            color: #cbd5e0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            padding: 10px;
+            background: #4a5568;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #667eea;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .main-content {
+                margin-top: 140px; /* Adjusted for mobile header */
+            }
+        }
+    
+        /* Additional styles that might be needed by child templates */
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">{% block logo %}TechStore{% endblock %}</div>
+                <ul class="nav-links">
+                    {% block nav_links %}
+                    <li><a href="{% url 'landing' %}">Home</a></li>
+                    <li><a href="{% url 'products' %}">Products</a></li>
+                    {% endblock %}
+                </ul>
+                <a>{% block cta_text %}Shop Now{% endblock %}</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% block content %}
+        <!-- Child templates will insert their content here -->
+        {% endblock %}
+    </div>
+
+    <div>
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                {% block footer_content %}
+                <div class="footer-section">
+                    <h3>TechStore</h3>
+                    <p>Your premier destination for cutting-edge technology. We bring you the latest innovations and quality products to enhance your digital lifestyle.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📷</a>
+                        <a href="#">💼</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="{% url 'landing' %}">Home</a></p>
+                    <p><a href="{% url 'products' %}">Products</a></p>
+                    <p><a href="#">Support</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Categories</h3>
+                    <p><a href="#">Smartphones</a></p>
+                    <p><a href="#">Laptops</a></p>
+                    <p><a href="#">Accessories</a></p>
+                    <p><a href="#">Gaming</a></p>
+                    <p><a href="#">Audio</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <p><a href="#">Help Center</a></p>
+                    <p><a href="#">Shipping Info</a></p>
+                    <p><a href="#">Returns</a></p>
+                    <p><a href="#">Warranty</a></p>
+                    <p><a href="#">Track Order</a></p>
+                </div>
+                {% endblock %}
+            </div>
+            <div class="footer-bottom">
+                {% block footer_bottom %}
+                <p>&copy; 2024 TechStore. All rights reserved. | Privacy Policy | Terms of Service</p>
+                {% endblock %}
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

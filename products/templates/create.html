@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+ <style>
+    .form-wrapper {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-family: system-ui, sans-serif;
+    }
+
+    .form-wrapper h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #1f2937; /* gray-800 */
+      text-align: center;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group input {
+      padding: 12px 14px;
+      font-size: 14px;
+      border: 1px solid #d1d5db; /* gray-300 */
+      border-radius: 6px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6; /* blue-500 */
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #2563eb;
+    }
+  </style>
+
+
+    <form class="form-wrapper" method="POST" enctype="multipart/form-data">
+        <h1>Add Product</h1>
+          {% csrf_token %}
+        <div class="form-group">
+            
+            <input type="text" name="name" placeholder="Name">
+            <input type="number" name="price" placeholder="Price">
+            <input type="text" name="description" placeholder="Description">
+            <input type="number" name="instock" placeholder="Stock">
+            <select name="category" required>
+            {% for cat in categories %}
+              <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+            </select>
+            <input type="file" name="image" accept="image/*">           
+            <button type="submit">Create</button>
+        </div>
+    </form>
+
+{% endblock %}
